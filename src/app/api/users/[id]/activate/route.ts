@@ -21,11 +21,10 @@ export const GET = async (req: NextRequest, { params }: Params) => {
   }
 
   const user = await getUserById(userId)
-
+  console.log(user)
   if (!user) {
     return new Response('User not found.', { status: 404 })
   }
-
   if (user.activatedAt) {
     return new Response('User already activated.', { status: 200 })
   }

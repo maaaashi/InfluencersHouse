@@ -1,7 +1,7 @@
 'use client'
 import { loginAtom } from '@/atoms/loginAtoms'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 export default function Page() {
@@ -9,17 +9,9 @@ export default function Page() {
   const [isError, setIsError] = useState('')
   const setLogin = useSetRecoilState(loginAtom)
   const navigate = useRouter()
-  // http://localhost:3000/admin/login?token=7c92f6a5-9549-4862-b27a-088ee0e7e675
-  // 正規表現でtokenを取得
 
   const login = async () => {
     const token = new URLSearchParams(window.location.search).get('token')
-
-    if (!token) {
-      setIsError('URLが不正です')
-      return
-    }
-
     const response = await fetch(`/api/users/${userId}/activate?token=${token}`)
     if (response.status !== 200) {
       setIsError('認証に失敗しました')

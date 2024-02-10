@@ -19,7 +19,7 @@ export class User {
       content.secondName,
       content.email,
       content.job,
-      content.activatedAt,
+      content.activated_at,
       content.imageURL
     )
   }
