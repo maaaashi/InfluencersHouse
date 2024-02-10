@@ -36,7 +36,7 @@ export default function Page({ params }: { params: Params }) {
       <div className='flex flex-col items-center gap-5'>
         あなたは招待されたお客様ではありません。
         <img
-          src='https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_5989.jpg'
+          src='https://http.cat/images/404.jpg'
           alt='インフルエンサーズハウス'
         />
       </div>
