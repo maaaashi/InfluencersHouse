@@ -17,6 +17,7 @@ export const POST = async (req: NextRequest) => {
     event_date: data.house.event_date,
     owner_id: data.house.owner_id,
     thumbnail: thumbnailImage,
+    invitations: data.house.invitations,
   })
   console.log(result)
   return NextResponse.json({ status: 'success' })

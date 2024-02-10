@@ -12,6 +12,7 @@ interface House {
   event_date: string
   owner_id: string
   thumbnail?: FileList
+  invitations?: string
 }
 
 export default function Page() {
@@ -51,6 +52,7 @@ export default function Page() {
           event_date: data.event_date,
           owner_id: data.owner_id,
           thumbnail: '',
+          invitations: data.invitations,
         },
       }),
     })
@@ -59,98 +61,107 @@ export default function Page() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center py-12 px-4'>
+    <div className='flex flex-col justify-center py-8 px-4 container mx-auto gap-4'>
+      <h2 className='font-bold self-start text-lg'>ハウス新規登録</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='w-full max-w-lg space-y-6 bg-white shadow-lg rounded-lg p-6 sm:p-8'
+        className='w-full space-y-6 bg-white shadow-lg rounded-lg p-6 sm:p-8'
       >
         <div>
-          <label
-            htmlFor='name'
-            className='text-sm font-medium text-gray-700 flex'
-          >
-            ハウス名
-            <Hissu />
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                ハウス名
+                <Hissu />
+              </span>
+            </div>
+            <input
+              {...register('name', { required: true })}
+              className='input input-bordered'
+              placeholder='美容で日本を変えるハウス'
+            />
           </label>
-          <input
-            {...register('name', { required: true })}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-          />
           {errors.name && (
             <span className='text-xs text-red-500'>ハウス名は必須です</span>
           )}
         </div>
 
         <div>
-          <label
-            htmlFor='description'
-            className='flex text-sm font-medium text-gray-700 rows-4'
-          >
-            概要
-            <Hissu />
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                概要
+                <Hissu />
+              </span>
+            </div>
+            <textarea
+              {...register('description', { required: true })}
+              className='textarea textarea-bordered h-24'
+              rows={8}
+              placeholder='美容で日本を変えるハウスです。本気で美容に取り組む方に声をかけています。'
+            />
           </label>
-          <textarea
-            {...register('description', { required: true })}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-            rows={8}
-          />
           {errors.description && (
             <span className='text-xs text-red-500'>概要は必須です</span>
           )}
         </div>
 
         <div>
-          <label
-            htmlFor='place'
-            className='flex text-sm font-medium text-gray-700'
-          >
-            場所
-            <Hissu />
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                場所
+                <Hissu />
+              </span>
+            </div>
+            <input
+              {...register('place', { required: true })}
+              className='input input-bordered'
+              placeholder='東京都渋谷区 〇〇ビル 3F'
+            />
           </label>
-          <input
-            {...register('place', { required: true })}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-          />
           {errors.place && (
             <span className='text-xs text-red-500'>場所は必須です</span>
           )}
         </div>
         <div>
-          <label
-            htmlFor='event_date'
-            className='flex text-sm font-medium text-gray-700'
-          >
-            開催日
-            <Hissu />
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                開催日
+                <Hissu />
+              </span>
+            </div>
+            <input
+              type='date'
+              {...register('event_date', { required: true })}
+              className='input input-bordered'
+            />
           </label>
-          <input
-            type='date'
-            {...register('event_date', { required: true })}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-          />
           {errors.event_date && (
             <span className='text-xs text-red-500'>開催日は必須です</span>
           )}
         </div>
         <div>
-          <label
-            htmlFor='owner_id'
-            className='flex text-sm font-medium text-gray-700'
-          >
-            主催者
-            <Hissu />
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                主催者
+                <Hissu />
+              </span>
+            </div>
+            <select
+              {...register('owner_id', { required: true })}
+              className='input input-bordered'
+            >
+              <option value=''>選択してください</option>
+              {owners.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.firstName}
+                </option>
+              ))}
+            </select>
           </label>
-          <select
-            {...register('owner_id', { required: true })}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-          >
-            <option value=''>選択してください</option>
-            {owners.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.firstName}
-              </option>
-            ))}
-          </select>
           {errors.owner_id && (
             <span className='text-xs text-red-500'>主催者は必須です</span>
           )}
@@ -168,17 +179,38 @@ export default function Page() {
             className='file-input file-input-bordered w-full'
           />
         </div>
+        <div>
+          <label className='form-control'>
+            <div className='label'>
+              <span className='label-text flex'>
+                招待
+                <Hissu />
+              </span>
+            </div>
+            <textarea
+              {...register('invitations')}
+              className='textarea textarea-bordered h-24'
+              rows={8}
+              placeholder={`suzuki@example.com
+tanaka@example.com
+endo@example.com`}
+            />
+          </label>
+          {errors.description && (
+            <span className='text-xs text-red-500'>概要は必須です</span>
+          )}
+        </div>
 
         <div className='flex justify-center'>
-          <button type='submit' className='btn btn-primary btn-outline flex-1'>
-            登録
-          </button>
           <button
             type='button'
             onClick={() => navigate.push('/admin/dashboard')}
             className='btn btn-outline flex-1'
           >
             戻る
+          </button>
+          <button type='submit' className='btn btn-primary btn-outline flex-1'>
+            登録
           </button>
         </div>
       </form>

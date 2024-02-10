@@ -84,6 +84,7 @@ export default function Page() {
               <th className='px-6 py-2 text-xs text-gray-500'>日付</th>
               <th className='px-6 py-2 text-xs text-gray-500'>場所</th>
               <th className='px-6 py-2 text-xs text-gray-500'>主催者</th>
+              <th className='px-6 py-2 text-xs text-gray-500'>招待</th>
               <th className='px-6 py-2 text-xs text-gray-500'>操作</th>
             </tr>
           </thead>
@@ -105,9 +106,13 @@ export default function Page() {
                       ?.firstName
                   }
                 </td>
+                <td className='px-6 py-4 text-sm text-gray-500 text-center'>
+                  {house.invitations}
+                </td>
+
                 <td className='px-6 py-4 text-center'>
                   <button
-                    className='btn btn-secondary font-bold py-2 px-4 rounded'
+                    className='btn btn-secondary font-normal py-2 px-4 rounded'
                     onClick={() =>
                       navigate.push(`/admin/dashboard/house/${house.id}`)
                     }
@@ -115,7 +120,7 @@ export default function Page() {
                     編集
                   </button>
                   <button
-                    className='btn btn-error font-bold py-2 px-4 rounded'
+                    className='btn btn-error font-normal py-2 px-4 rounded'
                     onClick={() => onDeleteHouse(house.id)}
                   >
                     削除

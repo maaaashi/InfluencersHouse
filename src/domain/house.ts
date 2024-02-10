@@ -8,7 +8,8 @@ export class House {
     public place: string,
     public event_date: Date,
     public owner_id: string,
-    public thumbnail: string
+    public thumbnail: string,
+    public invitations: string = ''
   ) {}
 
   // factory method
@@ -20,7 +21,8 @@ export class House {
       content.place,
       content.event_date,
       content.owner_id,
-      content.thumbnail
+      content.thumbnail,
+      content.invitations
     )
   }
 }

@@ -3,6 +3,7 @@ import { loginAtom } from '@/atoms/loginAtoms'
 import { User } from '@/domain/user'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { FaArrowCircleRight } from 'react-icons/fa'
 import { useSetRecoilState } from 'recoil'
 
 export default function Page() {
@@ -40,12 +41,14 @@ export default function Page() {
           <div className='flex items-center'>
             <input
               type='text'
+              name='userId'
               className='mt-1 block w-full border-gray-300 shadow-sm input input-bordered sm:text-sm'
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
             />
             <button className='btn btn-primary' onClick={login}>
               GO
+              <FaArrowCircleRight />
             </button>
           </div>
         </div>
