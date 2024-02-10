@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.card.image-full:before {
+  border-radius: 0 !important;
+}
