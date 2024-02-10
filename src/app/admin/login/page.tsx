@@ -14,10 +14,11 @@ export default function Page() {
   const token = searchParams.get('token')
   const login = async () => {
     if (!token) {
-      setIsError('トークンがありません')
+      setIsError('URLが不正です')
       return
     }
 
+    console.log(`/api/users/${userId}/activate?token=${token}`)
     const response = await fetch(`/api/users/${userId}/activate?token=${token}`)
     if (response.status !== 200) {
       setIsError('認証に失敗しました')
@@ -42,6 +43,8 @@ export default function Page() {
           <input
             type='text'
             className='mt-1 block w-full border-gray-300 shadow-sm input input-bordered sm:text-sm'
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
           />
         </div>
         <button className='btn btn-primary' onClick={login}>
