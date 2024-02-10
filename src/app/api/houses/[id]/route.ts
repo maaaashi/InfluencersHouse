@@ -15,3 +15,10 @@ export const GET = async (_req: NextRequest, { params }: Params) => {
     .single()
   return NextResponse.json({ house: houses.data })
 }
+
+export const DELETE = async (_req: NextRequest, { params }: Params) => {
+  await supabase.from('housetouser').delete().eq('house_id', params.id)
+  await supabase.from('houses').delete().eq('id', params.id)
+
+  return NextResponse.json({ status: 'success' })
+}
