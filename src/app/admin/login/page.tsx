@@ -1,7 +1,7 @@
 'use client'
 import { loginAtom } from '@/atoms/loginAtoms'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 
 export default function Page() {
@@ -12,9 +12,9 @@ export default function Page() {
   // http://localhost:3000/admin/login?token=7c92f6a5-9549-4862-b27a-088ee0e7e675
   // 正規表現でtokenを取得
 
-  const token = new URLSearchParams(window.location.search).get('token')
-
   const login = async () => {
+    const token = new URLSearchParams(window.location.search).get('token')
+
     if (!token) {
       setIsError('URLが不正です')
       return
