@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import RecoilRoot from '@/components/RecoilRoot'
 
 export const metadata: Metadata = {
   title: 'インフルエンサーズハウス',
@@ -15,10 +16,12 @@ export default function RootLayout({
   return (
     <html lang='ja' data-theme='light'>
       <body className='min-h-screen bg-stone-200 text-stone-700 flex flex-col overflow-hidden'>
-        <header className='p-4 border-stone-300 border-b-2'>
-          <h1 className='font-bold text-lg'>インフルエンサーズハウス</h1>
-        </header>
-        {children}
+        <RecoilRoot>
+          <header className='p-4 border-stone-300 border-b-2'>
+            <h1 className='font-bold text-lg'>インフルエンサーズハウス</h1>
+          </header>
+          {children}
+        </RecoilRoot>
       </body>
     </html>
   )
