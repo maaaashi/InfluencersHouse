@@ -5,6 +5,7 @@ import { User } from '@/domain/user'
 import { formatDateString } from '@/lib/date'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { IoIosSend } from 'react-icons/io'
 import { useRecoilValue } from 'recoil'
 
 export default function Page() {
@@ -57,6 +58,10 @@ export default function Page() {
     setHouses(houses)
   }
 
+  const onSendEmail = async (invitations: string) => {
+    console.log(invitations)
+  }
+
   if (isLoading) {
     return (
       <div className='flex justify-center items-center min-h-screen'>
@@ -70,7 +75,7 @@ export default function Page() {
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-semibold'>ハウス一覧</h2>
         <button
-          className='btn btn-primary font-bold py-2 px-4 rounded'
+          className='btn btn-primary'
           onClick={() => navigate.push('/admin/dashboard/house')}
         >
           新規作成
@@ -111,20 +116,29 @@ export default function Page() {
                 </td>
 
                 <td className='px-6 py-4 text-center'>
-                  <button
-                    className='btn btn-secondary font-normal py-2 px-4 rounded'
-                    onClick={() =>
-                      navigate.push(`/admin/dashboard/house/${house.id}`)
-                    }
-                  >
-                    編集
-                  </button>
-                  <button
-                    className='btn btn-error font-normal py-2 px-4 rounded'
-                    onClick={() => onDeleteHouse(house.id)}
-                  >
-                    削除
-                  </button>
+                  <div className='join join-vertical lg:join-horizontal'>
+                    <button
+                      className='btn font-normal join-item'
+                      onClick={() =>
+                        navigate.push(`/admin/dashboard/house/${house.id}`)
+                      }
+                    >
+                      編集
+                    </button>
+                    <button
+                      className='btn font-normal join-item'
+                      onClick={() => onDeleteHouse(house.id)}
+                    >
+                      削除
+                    </button>
+                    <button
+                      className='btn btn-primary btn-outline font-normal join-item'
+                      onClick={() => onSendEmail(house.invitations)}
+                    >
+                      招待メール送信
+                      <IoIosSend size={20} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
