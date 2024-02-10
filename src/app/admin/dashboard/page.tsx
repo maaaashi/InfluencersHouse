@@ -48,7 +48,7 @@ export default function Page() {
         <button
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
           onClick={() => {
-            console.log('新規作成ボタンがクリックされました')
+						navigate.push('/admin/dashboard/house')
           }}
         >
           新規作成

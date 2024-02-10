@@ -1,7 +1,9 @@
 'use client'
+import { User } from '@/domain/user'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-// 仮定しているHouse型を定義（実際のプロジェクトに合わせて調整してください）
 interface House {
   name: string
   description: string
@@ -12,17 +14,48 @@ interface House {
 }
 
 export default function Page() {
+  const [owners, setOwners] = useState<User[]>([])
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<House>()
+  const navigate = useRouter()
 
-  const onSubmit = (data: House) => {
-    console.log(data)
-    // ここでデータ送信のロジックを実装します
+  useEffect(() => {
+    const fetchOwner = async () => {
+      const response = await fetch('/api/users')
+      const data = await response.json()
+      const users = data.users.map((user: User) => {
+        return User.create(user)
+      })
+      setOwners(users)
+    }
+
+    fetchOwner()
+  }, [])
+
+  const onSubmit = async (data: House) => {
+    await fetch('/api/houses', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        house: {
+          name: data.name,
+          description: data.description,
+          place: data.place,
+          event_date: data.event_date,
+          owner_id: data.owner_id,
+          thumbnail: data.thumbnail,
+        },
+      }),
+    })
+    reset()
+    navigate.push('/admin/dashboard')
   }
-
   return (
     <div className='flex flex-col items-center justify-center py-12 px-4'>
       <form
@@ -41,7 +74,7 @@ export default function Page() {
             className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
           />
           {errors.name && (
-            <span className='text-xs text-red-500'>This field is required</span>
+            <span className='text-xs text-red-500'>ハウス名は必須です</span>
           )}
         </div>
 
@@ -58,7 +91,7 @@ export default function Page() {
             rows={8}
           />
           {errors.description && (
-            <span className='text-xs text-red-500'>This field is required</span>
+            <span className='text-xs text-red-500'>概要は必須です</span>
           )}
         </div>
 
@@ -72,10 +105,9 @@ export default function Page() {
           <input
             {...register('place', { required: true })}
             className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-            placeholder='Location'
           />
           {errors.place && (
-            <span className='text-xs text-red-500'>This field is required</span>
+            <span className='text-xs text-red-500'>場所は必須です</span>
           )}
         </div>
         <div>
@@ -91,7 +123,7 @@ export default function Page() {
             className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
           />
           {errors.event_date && (
-            <span className='text-xs text-red-500'>This field is required</span>
+            <span className='text-xs text-red-500'>開催日は必須です</span>
           )}
         </div>
         <div>
@@ -101,13 +133,19 @@ export default function Page() {
           >
             主催者
           </label>
-          <input
+          <select
             {...register('owner_id', { required: true })}
             className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-            placeholder="Owner's ID"
-          />
+          >
+            <option value=''>選択してください</option>
+            {owners.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.firstName}
+              </option>
+            ))}
+          </select>
           {errors.owner_id && (
-            <span className='text-xs text-red-500'>This field is required</span>
+            <span className='text-xs text-red-500'>主催者は必須です</span>
           )}
         </div>
         <div>
@@ -127,9 +165,16 @@ export default function Page() {
         <div className='flex justify-center'>
           <button
             type='submit'
-            className='inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out'
+            className='mr-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out'
           >
             登録
+          </button>
+          <button
+            type='button'
+            onClick={() => navigate.push('/admin/dashboard')}
+            className='inline border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out py-2 px-4 rounded-md'
+          >
+            戻る
           </button>
         </div>
       </form>
