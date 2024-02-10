@@ -3,7 +3,7 @@
 import { TextArea } from '@/components/form/TextArea'
 import { TextInput } from '@/components/form/TextInput'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { FaArrowCircleRight } from 'react-icons/fa'
 
 interface Params {
@@ -16,6 +16,14 @@ export default function Page({ params }: Params) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [questions, setQuestions] = useState<string[]>([])
+  const [data, setData] = useState({
+    secondName: '',
+    firstName: '',
+    email: '',
+    sns: '',
+    job: '',
+    questions: questions,
+  })
 
   const getQuestions = async () => {
     const response = await fetch('/api/questions')
@@ -28,8 +36,8 @@ export default function Page({ params }: Params) {
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault()
-
-    router.push(`/${params.id}/house`)
+    const form = e.target
+    // router.push(`/${params.id}/house`)
   }
 
   useEffect(() => {
@@ -59,7 +67,6 @@ export default function Page({ params }: Params) {
         <TextInput label='メールアドレス' type='email' required={true} />
         <TextInput label='SNS' required={true} />
         <TextInput label='職業' required={true} />
-        <TextArea label='実績' required={true} />
         {questions.map((question, index) => (
           <TextArea key={index} label={question} required={true} />
         ))}
