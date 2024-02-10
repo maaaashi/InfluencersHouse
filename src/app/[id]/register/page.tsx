@@ -3,7 +3,13 @@
 import { useRouter } from 'next/navigation'
 import { FaArrowCircleRight } from 'react-icons/fa'
 
-export default function Page({ params }) {
+interface Params {
+  params: {
+    id: string
+  }
+}
+
+export default function Page({ params }: Params) {
   const router = useRouter()
 
   const moveToHouse = () => {
