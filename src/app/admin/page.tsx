@@ -1,5 +1,5 @@
 'use client'
-import { activationUserByIdAndToken, getUserByIdAndToken } from '@/lib/user'
+import { activationUserByIdAndToken, getUserById } from '@/lib/user'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
@@ -16,14 +16,18 @@ export default function Page() {
       return
     }
 
-    const user = await getUserByIdAndToken(userId, token)
+    const user = await getUserById(userId)
     if (!user) {
       setIsError('ユーザーが見つかりません')
       return
     }
 
-    if (!user.activatedAt) {
-      activationUserByIdAndToken(userId, token)
+    const response = await fetch(
+      `/api/users/${user.id}/activate?token=${token}`
+    )
+    if (response.status !== 200) {
+      setIsError('認証に失敗しました')
+      return
     }
 
     setIsError('')

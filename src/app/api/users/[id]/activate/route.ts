@@ -1,4 +1,8 @@
-import { activationUserByIdAndToken, getUserByIdAndToken } from '@/lib/user'
+import {
+  activationUserByIdAndToken,
+  checkUserByIdAndToken,
+  getUserById,
+} from '@/lib/user'
 import { NextRequest } from 'next/server'
 
 type Params = {
@@ -7,7 +11,7 @@ type Params = {
   }
 }
 
-export const POST = async (req: NextRequest, { params }: Params) => {
+export const GET = async (req: NextRequest, { params }: Params) => {
   const userId = params.id
   const url = new URL(req.url)
   const token = url.searchParams.get('token')
@@ -16,10 +20,20 @@ export const POST = async (req: NextRequest, { params }: Params) => {
     return new Response('Token not found.', { status: 400 })
   }
 
-  const user = await getUserByIdAndToken(userId, token)
+  const user = await getUserById(userId)
 
   if (!user) {
     return new Response('User not found.', { status: 404 })
+  }
+
+  if (user.activatedAt) {
+    return new Response('User already activated.', { status: 200 })
+  }
+
+  const check = await checkUserByIdAndToken(userId, token)
+
+  if (!check) {
+    return new Response('Token is Bad.', { status: 404 })
   }
 
   await activationUserByIdAndToken(userId, token)
