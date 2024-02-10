@@ -7,7 +7,8 @@ export class House {
     public description: string,
     public place: string,
     public event_date: Date,
-    public owner_id: string
+    public owner_id: string,
+    public thumbnail: string
   ) {}
 
   // factory method
@@ -18,7 +19,8 @@ export class House {
       content.description,
       content.place,
       content.event_date,
-      content.owner_id
+      content.owner_id,
+      content.thumbnail
     )
   }
 }
