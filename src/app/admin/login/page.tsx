@@ -1,11 +1,13 @@
 'use client'
-import { activationUserByIdAndToken, getUserById } from '@/lib/user'
+import { loginAtom } from '@/atoms/loginAtoms'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 
 export default function Page() {
   const [userId, setUserId] = useState('')
   const [isError, setIsError] = useState('')
+  const setLogin = useSetRecoilState(loginAtom)
   const navigate = useRouter()
 
   const searchParams = useSearchParams()
@@ -16,15 +18,7 @@ export default function Page() {
       return
     }
 
-    const user = await getUserById(userId)
-    if (!user) {
-      setIsError('ユーザーが見つかりません')
-      return
-    }
-
-    const response = await fetch(
-      `/api/users/${user.id}/activate?token=${token}`
-    )
+    const response = await fetch(`/api/users/${userId}/activate?token=${token}`)
     if (response.status !== 200) {
       setIsError('認証に失敗しました')
       return
@@ -32,6 +26,8 @@ export default function Page() {
 
     setIsError('')
     setUserId('')
+
+    setLogin(true)
     navigate.push('/admin/dashboard')
   }
 
@@ -51,6 +47,10 @@ export default function Page() {
         <button className='btn btn-primary' onClick={login}>
           登録
         </button>
+
+        {isError && (
+          <div className='text-red-500 mt-4 text-center'>ERROR : {isError}</div>
+        )}
       </section>
     </div>
   )
