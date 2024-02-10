@@ -1,6 +1,8 @@
+import type { v4 } from 'uuid'
+
 export class User {
   constructor(
-    public id: string,
+    public id: typeof v4,
     public firstName: string,
     public secondName: string,
     public email: string,

@@ -1,0 +1,61 @@
+@startuml
+
+entity User {
+    id: uuid
+    firstName: string
+    secondName: string
+    email: string
+    job: string
+    activated_at: date
+    image_url: string
+}
+
+entity UserToSNS {
+    user_id: uuid
+    sns_id: id
+}
+
+entity SNS {
+    id: id
+    name: string
+}
+
+entity Question {
+    id: uuid
+    title: string
+}
+
+entity Answer {
+    id: uuid
+    answer: string
+}
+
+entity UserToQuestion {
+    user_id: uuid
+    question_id: uuid
+    answer_id: string
+}
+
+entity House {
+    id: uuid
+    name: string
+    description: string
+    place: string
+    event_date: date
+    owner_id: uuid
+}
+
+entity HouseToUser {
+    house_id: uuid
+    user_id: uuid
+}
+
+User ||--|{ UserToSNS
+SNS ||--|{ UserToSNS
+User ||--|{ UserToQuestion
+Answer ||--|{ UserToQuestion
+House ||--|{ HouseToUser
+User ||--|{ HouseToUser
+Question ||--|{ UserToQuestion
+
+@enduml

@@ -33,6 +33,12 @@ export default function Page({ params }) {
         </label>
         <label className='form-control w-full px-4'>
           <div className='label'>
+            <span className='label-text'>職業</span>
+          </div>
+          <input type='text' className='input input-bordered w-full max-w-xs' />
+        </label>
+        <label className='form-control w-full px-4'>
+          <div className='label'>
             <span className='label-text'>実績</span>
           </div>
           <textarea className='textarea textarea-bordered h-24'></textarea>
