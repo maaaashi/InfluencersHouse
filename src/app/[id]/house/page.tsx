@@ -42,7 +42,7 @@ export default function Page({ params }: { params: Params }) {
   }
 
   useEffect(() => {
-    !cookies[params.id] && router.push(`/${params.id}/`)
+    // !cookies[params.id] && router.push(`/${params.id}/`)
     getHouseUsers()
     getHouse()
     getDataHandler()
@@ -61,7 +61,7 @@ export default function Page({ params }: { params: Params }) {
           <h2 className='card-title'>{house.name}</h2>
         </div>
       </div>
-      <div className='bg-stone-100 rounded-lg p-4 flex flex-col gap-2'>
+      <div className='bg-stone-100 rounded-lg p-4 flex flex-col gap-2 w-full'>
         <h3 className='font-bold'>ハウス概要</h3>
         <section>
           <p
