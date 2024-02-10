@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ja' data-theme='light'>
-      <body className='min-h-screen bg-stone-200 text-stone-700 flex flex-col overflow-hidden'>
+      <body className='min-h-screen h-screen bg-stone-200 text-stone-700 flex flex-col overflow-hidden'>
         <RecoilRoot>
           <header className='px-4 py-2 border-stone-300 border-b-2'>
             <h1 className='font-bold text-lg flex items-center gap-2'>
@@ -28,7 +28,7 @@ export default function RootLayout({
               <span>インフルエンサーズハウス</span>
             </h1>
           </header>
-          {children}
+          <div className='flex-1 overflow-y-auto'>{children}</div>
         </RecoilRoot>
       </body>
     </html>
