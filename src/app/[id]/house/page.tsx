@@ -52,9 +52,15 @@ export default function Page({ params }: { params: Params }) {
     return <span className='loading loading-ring loading-lg'></span>
 
   return (
-    <div className='flex flex-col items-center gap-2 container mx-auto p-4'>
-      <h2 className='w-full font-bold text-lg'>{house.name}</h2>
-      <img src={house.thumbnail} alt={house.name} />
+    <div className='flex flex-col items-center container mx-auto gap-4'>
+      <div className='card w-full shadow-xl image-full'>
+        <figure>
+          <img src={house.thumbnail} alt='' />
+        </figure>
+        <div className='card-body self-end rounded-none'>
+          <h2 className='card-title'>{house.name}</h2>
+        </div>
+      </div>
       <div className='bg-stone-100 rounded-lg p-4 flex flex-col gap-2'>
         <h3 className='font-bold'>ハウス概要</h3>
         <section>

@@ -20,7 +20,7 @@ const config: Config = {
         },
       },
       animation: {
-        slideInUp: 'slideInUp 0.5s ease-out forwards',
+        slideInUp: 'slideInUp 1s ease-out forwards',
       },
     },
   },
