@@ -1,5 +1,6 @@
 'use client'
 import { loginAtom } from '@/atoms/loginAtoms'
+import { User } from '@/domain/user'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useSetRecoilState } from 'recoil'
@@ -18,10 +19,13 @@ export default function Page() {
       return
     }
 
+    const json = await response.json()
+
     setIsError('')
     setUserId('')
 
-    setLogin(true)
+    console.log(json.user)
+    setLogin(User.create(json.user))
     navigate.push('/admin/dashboard')
   }
 
@@ -33,16 +37,18 @@ export default function Page() {
           <label className='block text-sm font-medium text-gray-700'>
             ユーザーID
           </label>
-          <input
-            type='text'
-            className='mt-1 block w-full border-gray-300 shadow-sm input input-bordered sm:text-sm'
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-          />
+          <div className='flex items-center'>
+            <input
+              type='text'
+              className='mt-1 block w-full border-gray-300 shadow-sm input input-bordered sm:text-sm'
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+            />
+            <button className='btn btn-primary' onClick={login}>
+              GO
+            </button>
+          </div>
         </div>
-        <button className='btn btn-primary' onClick={login}>
-          登録
-        </button>
 
         {isError && (
           <div className='text-red-500 mt-4 text-center'>ERROR : {isError}</div>

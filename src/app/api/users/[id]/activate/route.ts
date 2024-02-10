@@ -3,7 +3,7 @@ import {
   checkUserByIdAndToken,
   getUserById,
 } from '@/lib/user'
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
 type Params = {
   params: {
@@ -21,12 +21,12 @@ export const GET = async (req: NextRequest, { params }: Params) => {
   }
 
   const user = await getUserById(userId)
-  console.log(user)
+
   if (!user) {
     return new Response('User not found.', { status: 404 })
   }
   if (user.activatedAt) {
-    return new Response('User already activated.', { status: 200 })
+    return NextResponse.json({ message: 'User activated.', user })
   }
 
   const check = await checkUserByIdAndToken(userId, token)
@@ -36,5 +36,5 @@ export const GET = async (req: NextRequest, { params }: Params) => {
   }
 
   await activationUserByIdAndToken(userId, token)
-  return new Response('User activated successfully.', { status: 200 })
+  return NextResponse.json({ message: 'User activated.', user })
 }

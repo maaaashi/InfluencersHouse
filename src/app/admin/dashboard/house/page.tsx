@@ -1,8 +1,8 @@
 'use client'
+import { Hissu } from '@/components/form/Hissu'
 import { User } from '@/domain/user'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface House {
@@ -67,9 +67,10 @@ export default function Page() {
         <div>
           <label
             htmlFor='name'
-            className='block text-sm font-medium text-gray-700'
+            className='text-sm font-medium text-gray-700 flex'
           >
             ハウス名
+            <Hissu />
           </label>
           <input
             {...register('name', { required: true })}
@@ -83,9 +84,10 @@ export default function Page() {
         <div>
           <label
             htmlFor='description'
-            className='block text-sm font-medium text-gray-700 rows-4'
+            className='flex text-sm font-medium text-gray-700 rows-4'
           >
             概要
+            <Hissu />
           </label>
           <textarea
             {...register('description', { required: true })}
@@ -100,9 +102,10 @@ export default function Page() {
         <div>
           <label
             htmlFor='place'
-            className='block text-sm font-medium text-gray-700'
+            className='flex text-sm font-medium text-gray-700'
           >
             場所
+            <Hissu />
           </label>
           <input
             {...register('place', { required: true })}
@@ -115,9 +118,10 @@ export default function Page() {
         <div>
           <label
             htmlFor='event_date'
-            className='block text-sm font-medium text-gray-700'
+            className='flex text-sm font-medium text-gray-700'
           >
             開催日
+            <Hissu />
           </label>
           <input
             type='date'
@@ -131,9 +135,10 @@ export default function Page() {
         <div>
           <label
             htmlFor='owner_id'
-            className='block text-sm font-medium text-gray-700'
+            className='flex text-sm font-medium text-gray-700'
           >
             主催者
+            <Hissu />
           </label>
           <select
             {...register('owner_id', { required: true })}
@@ -165,16 +170,13 @@ export default function Page() {
         </div>
 
         <div className='flex justify-center'>
-          <button
-            type='submit'
-            className='mr-10 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out'
-          >
+          <button type='submit' className='btn btn-primary btn-outline flex-1'>
             登録
           </button>
           <button
             type='button'
             onClick={() => navigate.push('/admin/dashboard')}
-            className='inline border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out py-2 px-4 rounded-md'
+            className='btn btn-outline flex-1'
           >
             戻る
           </button>

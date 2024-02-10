@@ -15,9 +15,10 @@ export default function Page() {
   const navigate = useRouter()
 
   useEffect(() => {
-    //   if (!login) {
-    //     navigate.push('/admin/login')
-    //   }
+    if (!login) {
+      navigate.push('/admin/login')
+      return
+    }
     const fetchHouses = async () => {
       const response = await fetch('/api/houses')
       const data = await response.json()
@@ -39,9 +40,11 @@ export default function Page() {
     fetchHouses()
     fetchOwner()
     setIsLoading(false)
-  }, [login, navigate])
+  }, [])
 
   const onDeleteHouse = async (id: string) => {
+    const confirm = window.confirm('本当に削除しますか？')
+    if (!confirm) return
     await fetch(`/api/houses/${id}`, {
       method: 'DELETE',
     })
@@ -67,7 +70,7 @@ export default function Page() {
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-semibold'>ハウス一覧</h2>
         <button
-          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+          className='btn btn-primary font-bold py-2 px-4 rounded'
           onClick={() => navigate.push('/admin/dashboard/house')}
         >
           新規作成
@@ -80,9 +83,8 @@ export default function Page() {
               <th className='px-6 py-2 text-xs text-gray-500'>ハウス名</th>
               <th className='px-6 py-2 text-xs text-gray-500'>日付</th>
               <th className='px-6 py-2 text-xs text-gray-500'>場所</th>
-              <th className='px-6 py-2 text-xs text-gray-500'>オーナー</th>
-              <th className='px-6 py-2 text-xs text-gray-500'>編集</th>
-              <th className='px-6 py-2 text-xs text-gray-500'>削除</th>
+              <th className='px-6 py-2 text-xs text-gray-500'>主催者</th>
+              <th className='px-6 py-2 text-xs text-gray-500'>操作</th>
             </tr>
           </thead>
           <tbody className='bg-white'>
@@ -105,17 +107,15 @@ export default function Page() {
                 </td>
                 <td className='px-6 py-4 text-center'>
                   <button
-                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                    className='btn btn-secondary font-bold py-2 px-4 rounded'
                     onClick={() =>
-                      console.log('編集ボタンがクリックされました')
+                      navigate.push(`/admin/dashboard/house/${house.id}`)
                     }
                   >
                     編集
                   </button>
-                </td>
-                <td className='px-6 py-4 text-center'>
                   <button
-                    className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                    className='btn btn-error font-bold py-2 px-4 rounded'
                     onClick={() => onDeleteHouse(house.id)}
                   >
                     削除
