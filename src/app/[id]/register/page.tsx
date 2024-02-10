@@ -2,10 +2,10 @@
 
 import { TextArea } from '@/components/form/TextArea'
 import { TextInput } from '@/components/form/TextInput'
-import { User } from '@/domain/user'
 import { useRouter } from 'next/navigation'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { FaArrowCircleRight } from 'react-icons/fa'
+import { useCookies } from 'react-cookie'
 
 interface Params {
   params: {
@@ -19,6 +19,7 @@ export default function Page({ params }: Params) {
   const [questions, setQuestions] = useState<{ id: string; title: string }[]>(
     []
   )
+  const [cookies, setCookie] = useCookies([params.id])
 
   const getQuestions = async () => {
     const response = await fetch('/api/questions')
@@ -61,10 +62,14 @@ export default function Page({ params }: Params) {
       },
       body: JSON.stringify({ user, answers }),
     })
+
+    setCookie(params.id, 'registered', { path: '/' })
     router.push(`/${params.id}/house`)
   }
 
   useEffect(() => {
+    cookies[params.id] && router.push(`/${params.id}/house`)
+
     getQuestions()
   }, [])
 
