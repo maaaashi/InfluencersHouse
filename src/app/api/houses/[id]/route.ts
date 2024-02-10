@@ -8,12 +8,23 @@ interface Params {
 }
 
 export const GET = async (_req: NextRequest, { params }: Params) => {
-  const houses = await supabase
+  const house = await supabase
     .from('houses')
     .select('*')
     .eq('id', params.id)
     .single()
-  return NextResponse.json({ house: houses.data })
+
+  const image = await supabase.storage
+    .from('image')
+    .createSignedUrl(`house_thumbnail/${house.data.thumbnail}`, 10)
+
+  const url = image.data?.signedUrl
+  return NextResponse.json({
+    house: {
+      ...house.data,
+      thumbnail: url,
+    },
+  })
 }
 
 export const DELETE = async (_req: NextRequest, { params }: Params) => {
