@@ -1,5 +1,3 @@
 export default function Page() {
-  return (
-    <div>WebPage</div>
-  );
+  return <div>WebPage</div>
 }
