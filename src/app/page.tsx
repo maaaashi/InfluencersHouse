@@ -1,8 +1,9 @@
-import { supabase } from '@/lib/SupabaseClient'
-import Image from 'next/image'
+import { LP } from '@/components/LP'
 
 export default function Home() {
-  return <main>
-    
-  </main>
+  return (
+    <main className='container mx-auto py-10'>
+      <LP />
+    </main>
+  )
 }

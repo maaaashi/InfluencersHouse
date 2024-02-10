@@ -13,13 +13,18 @@ interface Params {
 export default function Page({ params }: { params: Params }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
-  const [isHouse, setHouse] = useState<House | null>(null)
+  const [house, setHouse] = useState<House | null>(null)
 
   const getHouseById = async () => {
     const response = await fetch(`/api/houses/${params.id}`)
     const { house } = await response.json()
     setIsLoading(false)
-    setHouse(house)
+    setHouse(
+      House.create({
+        ...house,
+        event_date: new Date(house.event_date),
+      })
+    )
   }
   useEffect(() => {
     getHouseById()
@@ -31,7 +36,7 @@ export default function Page({ params }: { params: Params }) {
 
   if (isLoading) {
     return <span className='loading loading-ring loading-lg'></span>
-  } else if (!isHouse) {
+  } else if (!house) {
     return (
       <div className='flex flex-col items-center gap-5'>
         あなたは招待されたお客様ではありません。
@@ -44,13 +49,12 @@ export default function Page({ params }: { params: Params }) {
   } else {
     return (
       <div className='flex flex-col items-center gap-5'>
-        おめでとうございます。 あなたは招待されました。
-        <img
-          src='https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_5989.jpg'
-          alt='インフルエンサーズハウス'
-        />
+        おめでとうございます。
+        <span className='font-bold'>ハウス名: {house.name}</span>
+        にあなたは招待されました。
+        <img src={house.thumbnail} alt='インフルエンサーズハウス' />
         <button className='btn w-52' onClick={moveToRegisterPage}>
-          入力へ進む
+          次へ
           <FaArrowCircleRight />
         </button>
       </div>

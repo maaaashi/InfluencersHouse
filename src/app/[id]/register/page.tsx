@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
 import { FaArrowCircleRight } from 'react-icons/fa'
 import { useCookies } from 'react-cookie'
+import { Hissu } from '@/components/form/Hissu'
 
 interface Params {
   params: {
@@ -60,7 +61,7 @@ export default function Page({ params }: Params) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user, answers }),
+      body: JSON.stringify({ user, answers, house: { id: params.id } }),
     })
 
     setCookie(params.id, 'registered', { path: '/' })
@@ -77,53 +78,79 @@ export default function Page({ params }: Params) {
     return <span className='loading loading-ring loading-lg'></span>
 
   return (
-    <form className='flex flex-col items-center gap-4' onSubmit={submitHandler}>
-      <div>
-        <div className='flex gap-2 px-4'>
-          <label className='form-control w-1/2'>
-            <div className='label'>
-              <span className='label-text'>苗字</span>
-            </div>
-            <input
-              type='text'
-              className='input input-bordered'
-              required
-              name='secondName'
-            />
-          </label>
-          <label className='form-control w-1/2'>
-            <div className='label'>
-              <span className='label-text'>名前</span>
-            </div>
-            <input
-              type='text'
-              className='input input-bordered'
-              required
-              name='firstName'
-            />
-          </label>
-        </div>
-        <TextInput
-          label='メールアドレス'
-          type='email'
-          required={true}
-          name='email'
-        />
-        <TextInput label='SNS' required={true} name='sns' />
-        <TextInput label='職業' required={true} name='job' />
-        {questions.map((question, index) => (
-          <TextArea
-            key={index}
-            label={question.title}
+    <div className='p-4'>
+      <h2 className='font-bold'>情報を入力してください。</h2>
+      <form
+        className='flex flex-col items-center gap-4'
+        onSubmit={submitHandler}
+      >
+        <div>
+          <div className='sm:flex gap-2'>
+            <label className='form-control w-full sm:w-1/2'>
+              <div className='label'>
+                <span className='label-text flex'>
+                  苗字
+                  <Hissu />
+                </span>
+              </div>
+              <input
+                type='text'
+                className='input input-bordered'
+                required
+                name='secondName'
+                placeholder='山田'
+              />
+            </label>
+            <label className='form-control w-full sm:w-1/2'>
+              <div className='label'>
+                <span className='label-text flex'>
+                  名前
+                  <Hissu />
+                </span>
+              </div>
+              <input
+                type='text'
+                className='input input-bordered'
+                required
+                name='firstName'
+                placeholder='太郎'
+              />
+            </label>
+          </div>
+          <TextInput
+            label='メールアドレス'
+            type='email'
             required={true}
-            name={question.id}
+            name='email'
+            placeholder='abc@exaple.com'
           />
-        ))}
-      </div>
-      <button className='btn w-52' type='submit'>
-        登録
-        <FaArrowCircleRight />
-      </button>
-    </form>
+          <TextInput
+            label='SNS'
+            required={true}
+            name='sns'
+            placeholder='https://twitter.com/example'
+          />
+          <TextInput
+            label='職業'
+            required={true}
+            name='job'
+            placeholder='〇〇社取締役'
+          />
+          {questions.map((question, index) => (
+            <TextArea
+              key={index}
+              label={question.title}
+              required={true}
+              name={question.id}
+              placeholder='回答を入力してください'
+            />
+          ))}
+        </div>
+        <button className='btn w-52' type='submit'>
+          登録
+          <FaArrowCircleRight />
+        </button>
+      </form>
+    </div>
   )
 }
