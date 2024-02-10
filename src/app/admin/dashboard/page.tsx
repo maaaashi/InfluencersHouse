@@ -63,7 +63,7 @@ export default function Page() {
   }
 
   return (
-    <div className='container mx-auto px-4 md:px-40 mt-4 md:mt-10'>
+    <div className='container mx-auto px-4 mt-4 md:mt-10'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-xl font-semibold'>ハウス一覧</h2>
         <button

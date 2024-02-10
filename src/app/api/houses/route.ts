@@ -9,7 +9,7 @@ export const GET = async () => {
 export const POST = async (req: NextRequest) => {
   const data = await req.json()
   const thumbnailImage =
-    data.thumbnail ?? '5877d812-454b-4fa5-bed9-cae3a137a1ff'
+    data.thumbnail ?? '5877d812-454b-4fa5-bed9-cae3a137a1ff.webp'
   const result = await supabase.from('houses').insert({
     name: data.house.name,
     description: data.house.description,

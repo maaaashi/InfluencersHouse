@@ -1,7 +1,8 @@
 'use client'
 import { User } from '@/domain/user'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface House {
@@ -10,7 +11,7 @@ interface House {
   place: string
   event_date: string
   owner_id: string
-  thumbnail?: string
+  thumbnail?: FileList
 }
 
 export default function Page() {
@@ -49,13 +50,14 @@ export default function Page() {
           place: data.place,
           event_date: data.event_date,
           owner_id: data.owner_id,
-          thumbnail: data.thumbnail,
+          thumbnail: '',
         },
       }),
     })
     reset()
     navigate.push('/admin/dashboard')
   }
+
   return (
     <div className='flex flex-col items-center justify-center py-12 px-4'>
       <form
@@ -157,8 +159,8 @@ export default function Page() {
           </label>
           <input
             {...register('thumbnail')}
-            className='input input-rounded mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50'
-            placeholder='http://example.com/thumbnail.jpg'
+            type='file'
+            className='file-input file-input-bordered w-full'
           />
         </div>
 
