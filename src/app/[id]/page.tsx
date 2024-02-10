@@ -37,7 +37,7 @@ export default function Page({ params }: { params: Params }) {
         あなたは招待されたお客様ではありません。
         <img
           src='https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_5989.jpg'
-          alt=''
+          alt='インフルエンサーズハウス'
         />
       </div>
     )
@@ -47,7 +47,7 @@ export default function Page({ params }: { params: Params }) {
         おめでとうございます。 あなたは招待されました。
         <img
           src='https://images.dog.ceo/breeds/schnauzer-miniature/n02097047_5989.jpg'
-          alt=''
+          alt='インフルエンサーズハウス'
         />
         <button className='btn w-52' onClick={moveToRegisterPage}>
           入力へ進む
