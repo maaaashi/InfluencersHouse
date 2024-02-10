@@ -14,6 +14,8 @@ export const GET = async (_req: NextRequest, { params }: Params) => {
     .eq('id', params.id)
     .single()
 
+  if (!house.data) return NextResponse.json({ house: null })
+
   const image = await supabase.storage
     .from('image')
     .createSignedUrl(`house_thumbnail/${house.data.thumbnail}`, 10)

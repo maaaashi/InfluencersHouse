@@ -18,7 +18,11 @@ export default function Page({ params }: { params: Params }) {
   const getHouseById = async () => {
     const response = await fetch(`/api/houses/${params.id}`)
     const { house } = await response.json()
+
     setIsLoading(false)
+
+    if (!house) return
+
     setHouse(
       House.create({
         ...house,
