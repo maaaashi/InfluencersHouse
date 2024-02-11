@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 import Avatar from 'boring-avatars'
 import { House } from '@/domain/house'
 import Image from 'next/image'
+import { BsFacebook, BsInstagram, BsTwitterX } from 'react-icons/bs'
 
 interface Params {
   id: string
@@ -58,10 +59,23 @@ export default function Page({ params }: { params: Params }) {
         style={{ borderRadius: '0' }}
       >
         <figure>
-          <img src={house.thumbnail} alt='' />
+          <Image
+            src={house.thumbnail}
+            alt=''
+            width={'50000'}
+            height={'5000'}
+            priority
+          />
         </figure>
         <div className='card-body self-end'>
-          <h2 className='card-title text-2xl'>{house.name}</h2>
+          <div className='card-title text-2xl flex justify-between flex-col lg:flex-row'>
+            <h2 className='self-start lg:self-auto'>{house.name}</h2>
+            <div className='flex gap-2 self-end lg:self-auto'>
+              <BsTwitterX />
+              <BsInstagram />
+              <BsFacebook />
+            </div>
+          </div>
         </div>
       </div>
       <div className='bg-stone-100 rounded-lg p-4 flex flex-col gap-2 w-full'>
