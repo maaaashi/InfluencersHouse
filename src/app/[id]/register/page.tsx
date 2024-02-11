@@ -134,7 +134,7 @@ export default function Page({ params }: Params) {
             label='職業'
             required={true}
             name='job'
-            placeholder='〇〇社取締役'
+            placeholder='Webアプリケーションエンジニア'
           />
           {questions.map((question, index) => (
             <TextArea

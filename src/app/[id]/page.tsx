@@ -2,6 +2,7 @@
 
 import { House } from '@/domain/house'
 import { supabase } from '@/lib/SupabaseClient'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FaArrowCircleRight } from 'react-icons/fa'
@@ -52,13 +53,12 @@ export default function Page({ params }: { params: Params }) {
     )
   } else {
     return (
-      <div className='flex flex-col items-center gap-5'>
-        おめでとうございます。
-        <span className='font-bold'>ハウス名: {house.name}</span>
-        にあなたは招待されました。
-        <img src={house.thumbnail} alt='インフルエンサーズハウス' />
-        <button className='btn w-52' onClick={moveToRegisterPage}>
-          次へ
+      <div className='flex flex-col items-center gap-5 py-4 container mx-auto'>
+        <div>
+          <Image src='/invite.svg' alt='hoge' width={10000} height={10000} />
+        </div>
+        <button className='btn w-52 self-end' onClick={moveToRegisterPage}>
+          Next
           <FaArrowCircleRight />
         </button>
       </div>
