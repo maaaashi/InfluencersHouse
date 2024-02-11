@@ -1,38 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div><img src="./docs/InfluencersHouse.svg" /></div>
 
-## Getting Started
+<div align="center"></div>
+<div align="center">Let's 
+	<a href="https://influencers-house.mss-rep.com/">https://influencers-house.mss-rep.com/</a>
+</div>
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://youtu.be/Gp9XD7AsyvM
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# TOP
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+[![](./docs/TOP.png)](https://influencers-house.mss-rep.com)
+https://influencers-house.mss-rep.com
 
-## Learn More
+# Invite
 
-To learn more about Next.js, take a look at the following resources:
+[![](./docs/Invite.png)](https://influencers-house.mss-rep.com/06156de2-5533-4c68-b498-6d96e152ab69)
+https://influencers-house.mss-rep.com/06156de2-5533-4c68-b498-6d96e152ab69
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Event
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[![](./docs/Event.png)](https://influencers-house.mss-rep.com/06156de2-5533-4c68-b498-6d96e152ab69/house)
+https://influencers-house.mss-rep.com/06156de2-5533-4c68-b498-6d96e152ab69/house
 
-## Deploy on Vercel
+# Admin (not link)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-![Alt text](image.png)
+![](./docs/AdminDashboard.png)
