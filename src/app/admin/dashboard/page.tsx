@@ -58,8 +58,18 @@ export default function Page() {
     setHouses(houses)
   }
 
-  const onSendEmail = async (invitations: string) => {
-    console.log(invitations)
+  const onSendEmail = async (_invitations: string) => {
+    setTimeout(() => {
+      alert('招待メールを送信しました')
+    }, 1000)
+  }
+
+  const onClosedHouse = async () => {
+    const confirm = window.confirm('本当に閉会しますか？')
+    if (!confirm) return
+    setTimeout(() => {
+      alert('ハウスを閉じました。')
+    }, 1000)
   }
 
   if (isLoading) {
@@ -89,12 +99,12 @@ export default function Page() {
               <th className='px-6 py-2 text-xs text-gray-500'>日付</th>
               <th className='px-6 py-2 text-xs text-gray-500'>場所</th>
               <th className='px-6 py-2 text-xs text-gray-500'>主催者</th>
-              <th className='px-6 py-2 text-xs text-gray-500'>招待</th>
+              <th className='px-6 py-2 text-xs text-gray-500'>招待ゲスト</th>
               <th className='px-6 py-2 text-xs text-gray-500'>操作</th>
             </tr>
           </thead>
           <tbody className='bg-white'>
-            {houses.map((house) => (
+            {houses.map((house, index) => (
               <tr key={house.id} className='border-b'>
                 <td className='px-6 py-4 text-sm text-gray-500 text-center'>
                   {house.name}
@@ -111,11 +121,65 @@ export default function Page() {
                       ?.firstName
                   }
                 </td>
-                <td className='px-6 py-4 text-sm text-gray-500 text-center'>
-                  {house.invitations}
+                <td
+                  className='px-6 py-4 text-sm text-gray-500 text-center'
+                  dangerouslySetInnerHTML={{
+                    __html: house.invitations?.replace(/\s/, '<br>'),
+                  }}
+                ></td>
+
+                <td className='px-6 py-4 lg:hidden'>
+                  <div
+                    className={`dropdown ${
+                      houses.length < index + 3
+                        ? 'dropdown-top dropdown-end'
+                        : 'dropdown-end'
+                    }`}
+                  >
+                    <div tabIndex={0} role='button' className='btn'>
+                      Action
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52'
+                    >
+                      <li>
+                        <a
+                          onClick={() =>
+                            navigate.push(`/admin/dashboard/house/${house.id}`)
+                          }
+                        >
+                          編集
+                        </a>
+                      </li>
+                      <li>
+                        <a onClick={() => onDeleteHouse(house.id)}>削除</a>
+                      </li>
+                      <li>
+                        <a
+                          onClick={() => onSendEmail(house.invitations)}
+                          className={`${
+                            !house.invitations &&
+                            'pointer-events-none bg-stone-400'
+                          }`}
+                        >
+                          招待メール送信
+                          <IoIosSend size={20} />
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          className='text-error'
+                          onClick={() => onClosedHouse()}
+                        >
+                          閉会
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </td>
 
-                <td className='px-6 py-4 text-center'>
+                <td className='px-6 py-4 text-center hidden lg:block'>
                   <div className='join join-vertical lg:join-horizontal'>
                     <button
                       className='btn font-normal join-item'
@@ -134,9 +198,16 @@ export default function Page() {
                     <button
                       className='btn btn-primary btn-outline font-normal join-item'
                       onClick={() => onSendEmail(house.invitations)}
+                      disabled={!house.invitations}
                     >
                       招待メール送信
                       <IoIosSend size={20} />
+                    </button>
+                    <button
+                      className='btn btn-error btn-outline font-normal join-item'
+                      onClick={() => onClosedHouse()}
+                    >
+                      閉会
                     </button>
                   </div>
                 </td>

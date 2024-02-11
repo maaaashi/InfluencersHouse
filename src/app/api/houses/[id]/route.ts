@@ -29,6 +29,26 @@ export const GET = async (_req: NextRequest, { params }: Params) => {
   })
 }
 
+export const POST = async (req: NextRequest, { params }: Params) => {
+  const data = await req.json()
+  const thumbnailImage =
+    data.thumbnail ?? '5877d812-454b-4fa5-bed9-cae3a137a1ff.webp'
+  const result = await supabase
+    .from('houses')
+    .update({
+      name: data.house.name,
+      description: data.house.description,
+      place: data.house.place,
+      event_date: data.house.event_date,
+      owner_id: data.house.owner_id,
+      thumbnail: thumbnailImage,
+      invitations: data.house.invitations,
+    })
+    .eq('id', params.id)
+  console.log(result)
+  return NextResponse.json({ status: 'success' })
+}
+
 export const DELETE = async (_req: NextRequest, { params }: Params) => {
   await supabase.from('housetouser').delete().eq('house_id', params.id)
   await supabase.from('houses').delete().eq('id', params.id)

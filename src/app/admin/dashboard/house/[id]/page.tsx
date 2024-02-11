@@ -58,7 +58,7 @@ export default function Page(props: Props) {
   }, [])
 
   const onSubmit = async (data: House) => {
-    await fetch('/api/houses', {
+    await fetch(`/api/houses/${props.params.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
