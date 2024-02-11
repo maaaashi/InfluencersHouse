@@ -7,6 +7,18 @@ import Image from 'next/image'
 export const metadata: Metadata = {
   title: 'インフルエンサーズハウス',
   description: 'インフルエンサーズハウス',
+  openGraph: {
+    title: 'インフルエンサーズハウス',
+    url: 'https://influencers-house.mss-rep.com/',
+    siteName: 'インフルエンサーズハウス',
+    locale: 'ja_JP',
+    type: 'website',
+    images: '/InfluencersHouse.svg',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: '/InfluencersHouse.svg',
+  },
 }
 
 export default function RootLayout({
