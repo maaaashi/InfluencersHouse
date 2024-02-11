@@ -43,6 +43,8 @@ entity House {
     place: string
     event_date: date
     owner_id: uuid
+    thumbnail: string
+    invitations: string
 }
 
 entity HouseToUser {
